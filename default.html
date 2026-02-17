@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>URL Opener</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, sans-serif;
+      background: #1a1a2e;
+      color: #eee;
+      min-height: 100vh;
+    }
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 1rem;
+    }
+    .bar {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+      padding: 0.75rem;
+      background: #16213e;
+      border-radius: 8px;
+      margin-bottom: 0.5rem;
+    }
+    .bar a {
+      color: #0ea5e9;
+      text-decoration: none;
+      padding: 0.35rem 0.75rem;
+      border-radius: 6px;
+      font-size: 0.9rem;
+    }
+    .bar a:hover {
+      background: rgba(14, 165, 233, 0.2);
+    }
+    .iframe-wrap {
+      background: #0f0f1a;
+      border-radius: 8px;
+      overflow: hidden;
+      height: calc(100vh - 80px);
+      min-height: 400px;
+    }
+    .iframe-wrap iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+    }
+    .message {
+      padding: 2rem;
+      text-align: center;
+      color: #94a3b8;
+    }
+    .message code {
+      background: #16213e;
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="bar" id="bar" hidden>
+      <a id="openLink" href="#" target="_blank" rel="noopener">Open in new tab</a>
+    </div>
+    <div class="iframe-wrap" id="iframeWrap" hidden>
+      <iframe id="frame" title="Content"></iframe>
+    </div>
+    <div class="message" id="message">
+      Add <code>?url=https://example.com</code> to open in iframe, or
+      <code>?url=https://example.com&redirect=1</code> to redirect.
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      const params = new URLSearchParams(window.location.search);
+      const urlParam = params.get('url') || params.get('u');
+      const redirect = params.get('redirect') === '1' || params.get('redirect') === 'true';
+
+      if (!urlParam) return;
+
+      let targetUrl;
+      try {
+        targetUrl = new URL(urlParam, window.location.origin).href;
+      } catch {
+        document.getElementById('message').textContent = 'Invalid URL parameter.';
+        return;
+      }
+
+      if (redirect) {
+        window.location.replace(targetUrl);
+        return;
+      }
+
+      document.getElementById('message').hidden = true;
+      document.getElementById('iframeWrap').hidden = false;
+      document.getElementById('bar').hidden = false;
+
+      const frame = document.getElementById('frame');
+      const openLink = document.getElementById('openLink');
+      frame.src = targetUrl;
+      openLink.href = targetUrl;
+    })();
+  </script>
+</body>
+</html>
