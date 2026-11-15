@@ -5,6 +5,25 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <title>URL Opener</title>
+  <!-- Google Analytics 4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-27BYCXHGRE"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    // Report the page location WITHOUT the destination (?url= / ?u=) so full
+    // target URLs (which may contain tokens) never reach Analytics. UTM
+    // parameters are kept so campaign attribution works.
+    (function () {
+      var p = new URLSearchParams(window.location.search);
+      p.delete('url'); p.delete('u');
+      var q = p.toString();
+      gtag('config', 'G-27BYCXHGRE', {
+        page_location: window.location.protocol + '//' + window.location.host + window.location.pathname + (q ? '?' + q : ''),
+        transport_type: 'beacon'
+      });
+    })();
+  </script>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
@@ -293,6 +312,21 @@
       let selectedDuration = 10;
       let timer = null;
       let targetUrl = null;
+      let countdownStartedAt = 0;
+
+      // Analytics helper: sends via beacon so events survive the redirect.
+      // Only the destination hostname is ever sent, never the full URL.
+      function track(name, extra) {
+        if (typeof gtag !== 'function') return;
+        const data = Object.assign({ transport_type: 'beacon' }, extra || {});
+        if (targetUrl) {
+          data.destination_host = targetUrl.hostname;
+          if (countdownStartedAt) {
+            data.seconds_waited = Math.round((Date.now() - countdownStartedAt) / 100) / 10;
+          }
+        }
+        gtag('event', name, data);
+      }
 
       // DOM Elements
       const countdownState = document.getElementById('countdown-state');
@@ -341,15 +375,22 @@
       }
 
       // Execute Redirection
-      function executeRedirect() {
+      function executeRedirect(reason) {
         if (targetUrl) {
+          track(reason === 'skip' ? 'redirect_skip' : 'redirect_auto');
           window.location.replace(targetUrl.href);
         }
       }
 
       // Start Countdown Timer Process
-      function startCountdown(parsedUrl) {
+      function startCountdown(parsedUrl, entrySource) {
         targetUrl = parsedUrl;
+        countdownStartedAt = Date.now();
+        track('countdown_start', {
+          entry_source: entrySource || 'param',
+          duration_s: selectedDuration,
+          protocol: parsedUrl.protocol.replace(':', '')
+        });
 
         // Render URL Details
         previewHostname.textContent = parsedUrl.hostname;
@@ -390,7 +431,7 @@
 
           if (remainingMs <= 0) {
             clearInterval(timer);
-            executeRedirect();
+            executeRedirect('auto');
           }
         }, tickInterval);
       }
@@ -438,16 +479,18 @@
       if (rawUrlParam) {
         const parsed = parseAndValidateUrl(rawUrlParam);
         if (parsed) {
-          startCountdown(parsed);
+          startCountdown(parsed, params.get('url') ? 'param_url' : 'param_u');
         } else {
+          track('invalid_url', { entry_source: 'param' });
           showError('The destination URL parameter provided is malformed or invalid.');
         }
       }
 
       // Event Listeners
-      skipBtn.addEventListener('click', executeRedirect);
+      skipBtn.addEventListener('click', () => executeRedirect('skip'));
 
       cancelBtn.addEventListener('click', () => {
+        track('redirect_cancel');
         resetToInitialState();
       });
 
@@ -460,7 +503,7 @@
           e.target.className = "timer-speed-btn px-2.5 py-1 rounded-lg bg-indigo-600 border border-indigo-500 text-white font-semibold";
           selectedDuration = parseInt(e.target.getAttribute('data-seconds'), 10);
           if (targetUrl) {
-            startCountdown(targetUrl);
+            startCountdown(targetUrl, 'duration_change');
           }
         });
       });
@@ -473,8 +516,10 @@
         if (parsed) {
           const newSearch = `?url=${encodeURIComponent(parsed.href)}`;
           window.history.pushState({}, '', window.location.pathname + newSearch);
-          startCountdown(parsed);
+          startCountdown(parsed, 'test_form');
+          track('manual_test_submit');
         } else {
+          track('invalid_url', { entry_source: 'test_form' });
           showError('Please enter a valid target URL (e.g., example.com or https://site.org).');
         }
       });
