@@ -192,7 +192,21 @@
 
         <!-- STATE 1: Redirect Countdown Active -->
         <div id="countdown-state" class="hidden flex-col items-center text-center">
-          
+
+          <!-- Whack-a-Bug Mini Game (top, so it's the first thing users see) -->
+          <div class="w-full bg-slate-900/60 border border-slate-800 rounded-2xl p-4 mb-6">
+            <div class="flex items-center justify-between mb-3 text-xs">
+              <span class="font-bold text-slate-200 flex items-center gap-1.5">
+                <span>🔨</span> Whack-a-Bug <span class="text-slate-500 font-medium">(while you wait)</span>
+              </span>
+              <span class="font-mono text-slate-400">
+                Score <b id="game-score" class="text-emerald-400">0</b> · Best <b id="game-best" class="text-purple-300">0</b>
+              </span>
+            </div>
+            <div id="game-grid" class="grid grid-cols-3 gap-2.5 max-w-[240px] mx-auto" role="group" aria-label="Whack-a-Bug game"></div>
+            <p id="game-hint" class="text-[11px] text-slate-500 mt-3 min-h-[1rem]">Smash the bugs 🐛. Spare the puppy 🐶.</p>
+          </div>
+
           <!-- Circular Progress Display -->
           <div class="relative w-40 h-40 flex items-center justify-center my-2">
             <svg class="w-full h-full" viewBox="0 0 120 120">
@@ -258,20 +272,6 @@
             <div class="font-mono text-xs text-slate-400 truncate break-all opacity-80" id="preview-full-url">
               https://example.com
             </div>
-          </div>
-
-          <!-- Whack-a-Bug Mini Game -->
-          <div class="w-full bg-slate-900/60 border border-slate-800 rounded-2xl p-4 mb-6">
-            <div class="flex items-center justify-between mb-3 text-xs">
-              <span class="font-bold text-slate-200 flex items-center gap-1.5">
-                <span>🔨</span> Whack-a-Bug <span class="text-slate-500 font-medium">(while you wait)</span>
-              </span>
-              <span class="font-mono text-slate-400">
-                Score <b id="game-score" class="text-emerald-400">0</b> · Best <b id="game-best" class="text-purple-300">0</b>
-              </span>
-            </div>
-            <div id="game-grid" class="grid grid-cols-3 gap-2.5 max-w-[240px] mx-auto" role="group" aria-label="Whack-a-Bug game"></div>
-            <p id="game-hint" class="text-[11px] text-slate-500 mt-3 min-h-[1rem]">Smash the bugs 🐛. Spare the puppy 🐶.</p>
           </div>
 
           <!-- Controls / Actions -->
