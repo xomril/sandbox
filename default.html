@@ -96,6 +96,59 @@
       0% { background-position: -200% 0; }
       100% { background-position: 200% 0; }
     }
+
+    /* Whack-a-Bug mini game */
+    .hole {
+      aspect-ratio: 1 / 1;
+      position: relative;
+      overflow: hidden;
+      border-radius: 9999px;
+      background: radial-gradient(circle at 50% 70%, #020617 0%, #0f172a 70%);
+      border: 2px solid rgba(99, 102, 241, 0.25);
+      box-shadow: inset 0 6px 14px rgba(0, 0, 0, 0.8);
+      cursor: crosshair;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+    }
+    .hole .critter {
+      position: absolute;
+      left: 0; right: 0; bottom: 0;
+      text-align: center;
+      font-size: 2rem;
+      line-height: 1;
+      transform: translateY(110%);
+      transition: transform 0.12s ease-out;
+      pointer-events: none;
+    }
+    .hole.up .critter { transform: translateY(8%); }
+    .hole.whacked { animation: whack 0.25s ease-out; }
+    .hole.oops { animation: oops 0.35s ease-out; }
+    @keyframes whack {
+      0% { box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.9), inset 0 6px 14px rgba(0,0,0,.8); }
+      100% { box-shadow: 0 0 0 16px rgba(52, 211, 153, 0), inset 0 6px 14px rgba(0,0,0,.8); }
+    }
+    @keyframes oops {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-5px); }
+      75% { transform: translateX(5px); }
+    }
+    .float-pts {
+      position: absolute;
+      left: 50%; top: 20%;
+      font-weight: 800;
+      font-size: 0.9rem;
+      pointer-events: none;
+      animation: float-up 0.7s ease-out forwards;
+    }
+    @keyframes float-up {
+      from { opacity: 1; transform: translate(-50%, 0); }
+      to { opacity: 0; transform: translate(-50%, -28px); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .hole .critter { transition: none; }
+      .hole.whacked, .hole.oops, .float-pts { animation: none; }
+    }
   </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between items-center relative selection:bg-indigo-500 selection:text-white">
@@ -183,7 +236,7 @@
           </div>
 
           <h2 class="text-2xl font-bold text-white mt-4 mb-1 tracking-tight">Redirecting You</h2>
-          <p class="text-slate-400 text-sm mb-6">Hold tight, preparing destination portal...</p>
+          <p id="funny-msg" class="text-slate-400 text-sm mb-5 min-h-[1.25rem]">Hold tight, preparing destination portal...</p>
 
           <!-- Destination Live Preview Card -->
           <div class="w-full bg-slate-900/80 border border-slate-800 rounded-2xl p-4 mb-6 text-left shadow-inner">
@@ -205,6 +258,20 @@
             <div class="font-mono text-xs text-slate-400 truncate break-all opacity-80" id="preview-full-url">
               https://example.com
             </div>
+          </div>
+
+          <!-- Whack-a-Bug Mini Game -->
+          <div class="w-full bg-slate-900/60 border border-slate-800 rounded-2xl p-4 mb-6">
+            <div class="flex items-center justify-between mb-3 text-xs">
+              <span class="font-bold text-slate-200 flex items-center gap-1.5">
+                <span>🔨</span> Whack-a-Bug <span class="text-slate-500 font-medium">(while you wait)</span>
+              </span>
+              <span class="font-mono text-slate-400">
+                Score <b id="game-score" class="text-emerald-400">0</b> · Best <b id="game-best" class="text-purple-300">0</b>
+              </span>
+            </div>
+            <div id="game-grid" class="grid grid-cols-3 gap-2.5 max-w-[240px] mx-auto" role="group" aria-label="Whack-a-Bug game"></div>
+            <p id="game-hint" class="text-[11px] text-slate-500 mt-3 min-h-[1rem]">Smash the bugs 🐛. Spare the puppy 🐶.</p>
           </div>
 
           <!-- Controls / Actions -->
@@ -374,8 +441,126 @@
         }
       }
 
+      // ---------- Fun: rotating messages + Whack-a-Bug ----------
+      const funnyMsg = document.getElementById('funny-msg');
+      const gameGrid = document.getElementById('game-grid');
+      const gameScoreEl = document.getElementById('game-score');
+      const gameBestEl = document.getElementById('game-best');
+      const gameHint = document.getElementById('game-hint');
+
+      const funnyLines = [
+        'Teaching hamsters to carry your packets...',
+        'Untangling the internet cables...',
+        'Asking the server nicely...',
+        'Convincing pixels to line up...',
+        'Warming up the redirect engine (it\'s a toaster)...',
+        'Bribing the router with cookies...',
+        'Reticulating splines...',
+        'Almost there. Probably. Maybe.'
+      ];
+      const hitLines = ['Splat!', 'Bug squashed!', 'Nice one!', 'Debugging 101!', 'Ship it!', 'Gotcha!'];
+      const oopsLines = ['Hey! That was the intern\'s puppy!', 'Puppy is NOT a bug. -3', 'Bad human. The puppy forgives you... barely.'];
+
+      let msgTimer = null, spawnTimer = null, hideTimer = null;
+      let score = 0, best = 0, activeHole = null, activeIsPuppy = false;
+      let holes = [];
+
+      try { best = parseInt(localStorage.getItem('whackBest') || '0', 10) || 0; } catch (e) {}
+      gameBestEl.textContent = best;
+
+      function buildGrid() {
+        if (holes.length) return;
+        for (let i = 0; i < 9; i++) {
+          const h = document.createElement('button');
+          h.type = 'button';
+          h.className = 'hole';
+          h.setAttribute('aria-label', 'hole ' + (i + 1));
+          h.innerHTML = '<span class="critter"></span>';
+          h.addEventListener('pointerdown', (e) => { e.preventDefault(); whack(h); });
+          gameGrid.appendChild(h);
+          holes.push(h);
+        }
+      }
+
+      function floatText(hole, text, color) {
+        const f = document.createElement('span');
+        f.className = 'float-pts';
+        f.style.color = color;
+        f.textContent = text;
+        hole.appendChild(f);
+        setTimeout(() => f.remove(), 700);
+      }
+
+      function setScore(v) {
+        score = Math.max(0, v);
+        gameScoreEl.textContent = score;
+        if (score > best) {
+          best = score;
+          gameBestEl.textContent = best;
+          try { localStorage.setItem('whackBest', String(best)); } catch (e) {}
+        }
+      }
+
+      function hideActive() {
+        if (activeHole) activeHole.classList.remove('up');
+        activeHole = null;
+      }
+
+      function whack(hole) {
+        if (hole !== activeHole) return;
+        const puppy = activeIsPuppy;
+        hideActive();
+        clearTimeout(hideTimer);
+        if (puppy) {
+          setScore(score - 3);
+          hole.classList.remove('oops'); void hole.offsetWidth; hole.classList.add('oops');
+          floatText(hole, '-3', '#f87171');
+          gameHint.textContent = oopsLines[Math.floor(Math.random() * oopsLines.length)];
+        } else {
+          setScore(score + 1);
+          hole.classList.remove('whacked'); void hole.offsetWidth; hole.classList.add('whacked');
+          floatText(hole, '+1', '#34d399');
+          gameHint.textContent = hitLines[Math.floor(Math.random() * hitLines.length)];
+        }
+      }
+
+      function spawn() {
+        hideActive();
+        let h;
+        do { h = holes[Math.floor(Math.random() * holes.length)]; } while (h === activeHole);
+        activeIsPuppy = Math.random() < 0.18;
+        const bugs = ['🐛', '🐞', '🦟', '🪲'];
+        h.querySelector('.critter').textContent = activeIsPuppy ? '🐶' : bugs[Math.floor(Math.random() * bugs.length)];
+        h.classList.add('up');
+        activeHole = h;
+        const stay = Math.max(450, 900 - score * 20);
+        hideTimer = setTimeout(hideActive, stay);
+      }
+
+      function startFun() {
+        stopFun();
+        buildGrid();
+        setScore(0);
+        gameHint.textContent = 'Smash the bugs 🐛. Spare the puppy 🐶.';
+        let i = 0;
+        funnyMsg.textContent = funnyLines[0];
+        msgTimer = setInterval(() => {
+          i = (i + 1) % funnyLines.length;
+          funnyMsg.textContent = funnyLines[i];
+        }, 2200);
+        spawnTimer = setInterval(spawn, 1000);
+      }
+
+      function stopFun() {
+        clearInterval(msgTimer);
+        clearInterval(spawnTimer);
+        clearTimeout(hideTimer);
+        hideActive();
+      }
+
       // Execute Redirection
       function executeRedirect(reason) {
+        stopFun();
         if (targetUrl) {
           track(reason === 'skip' ? 'redirect_skip' : 'redirect_auto');
           window.location.replace(targetUrl.href);
@@ -412,6 +597,7 @@
         countdownState.classList.add('flex');
 
         if (timer) clearInterval(timer);
+        startFun();
 
         const totalDurationMs = selectedDuration * 1000;
         let elapsedMs = 0;
@@ -439,6 +625,7 @@
       // Display Error Message
       function showError(msg) {
         if (timer) clearInterval(timer);
+        stopFun();
         emptyState.classList.add('hidden');
         countdownState.classList.add('hidden');
         errorState.classList.remove('hidden');
@@ -449,6 +636,7 @@
       // Global Reset Helper
       window.resetToInitialState = function() {
         if (timer) clearInterval(timer);
+        stopFun();
         window.history.pushState({}, '', window.location.pathname);
         errorState.classList.add('hidden');
         countdownState.classList.add('hidden');
