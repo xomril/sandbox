@@ -97,6 +97,20 @@
       100% { background-position: 200% 0; }
     }
 
+    /* Side note (sticky-note style) */
+    .side-note {
+      background: linear-gradient(160deg, rgba(245,158,11,0.16), rgba(245,158,11,0.07));
+      border: 1px solid rgba(245,158,11,0.35);
+      border-radius: 1rem;
+      padding: 1.1rem 1.2rem;
+      box-shadow: 0 18px 40px -16px rgba(0,0,0,0.7);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+    @media (min-width: 1280px) {
+      .side-note { transform: rotate(1.5deg); }
+    }
+
     /* Ice Cream Rush mini game */
     .hole {
       aspect-ratio: 1 / 1;
@@ -159,21 +173,6 @@
   <!-- Ambient Light Orbs -->
   <div class="fixed top-[-10%] left-[-10%] w-[500px] h-[500px] bg-glow-1 pointer-events-none rounded-full z-0"></div>
   <div class="fixed bottom-[-10%] right-[-10%] w-[500px] h-[500px] bg-glow-2 pointer-events-none rounded-full z-0"></div>
-
-  <!-- Personal-account Notice Banner -->
-  <header class="w-full z-20 sticky top-0">
-    <div class="shimmer-banner border-b border-amber-500/30 backdrop-blur-md text-amber-200 px-4 py-3 flex items-center justify-center gap-3 text-sm shadow-xl">
-      <div class="flex items-center justify-center w-7 h-7 rounded-full bg-amber-500/20 text-amber-400 flex-shrink-0 animate-bounce">
-        <i class="fa-solid fa-triangle-exclamation text-xs"></i>
-      </div>
-      <p class="font-medium text-center text-xs sm:text-sm">
-        <span class="font-bold uppercase tracking-wide text-amber-300">Plot twist:</span>
-        this page lives on my <span class="font-extrabold text-white underline decoration-amber-400 decoration-2">personal GitHub account</span>
-        (<a href="https://github.com/xomril" target="_blank" rel="noopener" class="font-bold text-white underline decoration-amber-400 decoration-2 hover:text-amber-300">xomril</a>), not a corporate server.
-        I gave Fireblocks plenty of time to move to a page they actually own. They kept using mine, so from time to time I sneak something cute in here. Enjoy the ice cream. 🍦
-      </p>
-    </div>
-  </header>
 
   <!-- Main Container -->
   <main class="w-full max-w-xl px-4 py-8 z-10 flex-1 flex flex-col justify-center items-center">
@@ -364,6 +363,26 @@
         </div>
 
       </div>
+
+      <!-- Side note: beside the card on wide screens, below it on small ones -->
+      <aside class="side-note mt-6 mx-auto max-w-sm xl:mt-0 xl:mx-0 xl:absolute xl:top-10 xl:left-full xl:ml-10 xl:w-64 text-left">
+        <div class="flex items-center gap-2 mb-3">
+          <span class="text-xl">📌</span>
+          <span class="text-[11px] font-extrabold uppercase tracking-widest text-amber-300">A note from the human</span>
+        </div>
+        <p class="text-sm leading-relaxed text-amber-100/90 mb-3">
+          Plot twist: this page lives on my <b class="text-white">personal GitHub account</b>, not on a corporate server.
+        </p>
+        <p class="text-sm leading-relaxed text-amber-100/90 mb-3">
+          I gave Fireblocks plenty of time to move to a page they actually own. They kept using mine.
+        </p>
+        <p class="text-sm leading-relaxed text-amber-100/90 mb-4">
+          So from time to time I sneak something cute in here. Today: ice cream. 🍦
+        </p>
+        <a href="https://github.com/xomril" target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 text-xs font-bold text-white underline decoration-amber-400 decoration-2 underline-offset-4 hover:text-amber-300">
+          <i class="fa-brands fa-github"></i> xomril
+        </a>
+      </aside>
     </div>
   </main>
 
