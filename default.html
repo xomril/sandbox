@@ -31,8 +31,8 @@
     
     body {
       font-family: 'Plus Jakarta Sans', sans-serif;
-      background-color: #090d16;
-      color: #f1f5f9;
+      background-color: #f8fafc;
+      color: #0f172a;
       overflow-x: hidden;
     }
 
@@ -42,26 +42,26 @@
 
     /* Ambient Glowing Background Orbs */
     .bg-glow-1 {
-      background: radial-gradient(circle, rgba(99, 102, 241, 0.25) 0%, rgba(0, 0, 0, 0) 70%);
+      background: radial-gradient(circle, rgba(37, 99, 235, 0.14) 0%, rgba(0, 0, 0, 0) 70%);
     }
     .bg-glow-2 {
-      background: radial-gradient(circle, rgba(168, 85, 247, 0.2) 0%, rgba(0, 0, 0, 0) 70%);
+      background: radial-gradient(circle, rgba(14, 165, 233, 0.14) 0%, rgba(0, 0, 0, 0) 70%);
     }
 
     /* Glassmorphism Card Style */
     .glass-card {
-      background: rgba(15, 23, 42, 0.65);
+      background: rgba(255, 255, 255, 0.88);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6),
-                  0 0 30px rgba(99, 102, 241, 0.08);
+      border: 1px solid rgba(15, 23, 42, 0.08);
+      box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.18),
+                  0 0 30px rgba(37, 99, 235, 0.06);
     }
 
     .glass-pill {
-      background: rgba(255, 255, 255, 0.04);
+      background: rgba(15, 23, 42, 0.04);
       backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(15, 23, 42, 0.08);
     }
 
     /* SVG Radial Ring Animation */
@@ -74,10 +74,10 @@
     /* Pulse Glow Animation */
     @keyframes pulse-glow {
       0%, 100% {
-        box-shadow: 0 0 15px rgba(99, 102, 241, 0.3);
+        box-shadow: 0 0 15px rgba(37, 99, 235, 0.3);
       }
       50% {
-        box-shadow: 0 0 30px rgba(168, 85, 247, 0.6);
+        box-shadow: 0 0 30px rgba(14, 165, 233, 0.6);
       }
     }
 
@@ -103,7 +103,7 @@
       border: 1px solid rgba(245,158,11,0.35);
       border-radius: 1rem;
       padding: 1.1rem 1.2rem;
-      box-shadow: 0 18px 40px -16px rgba(0,0,0,0.7);
+      box-shadow: 0 18px 40px -16px rgba(15,23,42,0.25);
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
     }
@@ -117,9 +117,9 @@
       position: relative;
       overflow: hidden;
       border-radius: 9999px;
-      background: radial-gradient(circle at 50% 70%, #020617 0%, #0f172a 70%);
-      border: 2px solid rgba(99, 102, 241, 0.25);
-      box-shadow: inset 0 6px 14px rgba(0, 0, 0, 0.8);
+      background: radial-gradient(circle at 50% 70%, #cbd5e1 0%, #eef2f7 75%);
+      border: 2px solid rgba(37, 99, 235, 0.3);
+      box-shadow: inset 0 6px 14px rgba(15, 23, 42, 0.3);
       cursor: crosshair;
       user-select: none;
       -webkit-tap-highlight-color: transparent;
@@ -142,8 +142,8 @@
     .hole.whacked { animation: whack 0.25s ease-out; }
     .hole.oops { animation: oops 0.35s ease-out; }
     @keyframes whack {
-      0% { box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.9), inset 0 6px 14px rgba(0,0,0,.8); }
-      100% { box-shadow: 0 0 0 16px rgba(52, 211, 153, 0), inset 0 6px 14px rgba(0,0,0,.8); }
+      0% { box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.9), inset 0 6px 14px rgba(15,23,42,.3); }
+      100% { box-shadow: 0 0 0 16px rgba(52, 211, 153, 0), inset 0 6px 14px rgba(15,23,42,.3); }
     }
     @keyframes oops {
       0%, 100% { transform: translateX(0); }
@@ -162,13 +162,85 @@
       from { opacity: 1; transform: translate(-50%, 0); }
       to { opacity: 0; transform: translate(-50%, -28px); }
     }
+    /* "This is my page" banner + stamp */
+    .owner-banner {
+      background: linear-gradient(90deg, #1d4ed8, #0ea5e9, #1d4ed8);
+      background-size: 200% 100%;
+      animation: owner-slide 8s linear infinite;
+      color: #ffffff;
+    }
+    @keyframes owner-slide {
+      from { background-position: 0% 0; }
+      to { background-position: 200% 0; }
+    }
+    .owner-stamp {
+      position: absolute;
+      top: 0.9rem; right: -0.6rem;
+      transform: rotate(8deg);
+      border: 2px dashed rgba(37, 99, 235, 0.8);
+      color: #1d4ed8;
+      background: rgba(255, 255, 255, 0.85);
+      padding: 0.15rem 0.5rem;
+      border-radius: 0.5rem;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      pointer-events: none;
+      z-index: 5;
+      animation: stamp-in 0.5s 0.6s cubic-bezier(.2,1.6,.4,1) both;
+    }
+    @keyframes stamp-in {
+      from { opacity: 0; transform: rotate(8deg) scale(2.4); }
+      to { opacity: 1; transform: rotate(8deg) scale(1); }
+    }
+    /* Emoji confetti (milestones) */
+    .confetti {
+      position: fixed;
+      top: -2rem;
+      pointer-events: none;
+      z-index: 60;
+      animation: confetti-fall linear forwards;
+    }
+    @keyframes confetti-fall {
+      to { transform: translateY(110vh) rotate(540deg); opacity: 0.8; }
+    }
+    /* Cookie notice (joke) */
+    #cookie-note {
+      position: fixed;
+      left: 1rem; bottom: 1rem;
+      max-width: 17rem;
+      z-index: 50;
+      background: rgba(255, 255, 255, 0.97);
+      border: 1px solid rgba(37, 99, 235, 0.3);
+      border-radius: 1rem;
+      padding: 0.8rem 1rem;
+      font-size: 11px;
+      line-height: 1.45;
+      color: #1e293b;
+      box-shadow: 0 18px 40px -16px rgba(15,23,42,0.35);
+      animation: note-in 0.5s cubic-bezier(.2,1.6,.4,1) both;
+    }
+    @keyframes note-in {
+      from { opacity: 0; transform: translateY(20px) scale(0.9); }
+      to { opacity: 1; transform: none; }
+    }
     @media (prefers-reduced-motion: reduce) {
+      .confetti { display: none; }
+      #cookie-note { animation: none; }
+      .owner-banner, .owner-stamp { animation: none; }
       .hole .critter { transition: none; }
       .hole.whacked, .hole.oops, .float-pts { animation: none; }
     }
   </style>
 </head>
-<body class="min-h-screen flex flex-col justify-between items-center relative selection:bg-indigo-500 selection:text-white">
+<body class="min-h-screen flex flex-col justify-between items-center relative selection:bg-blue-500 selection:text-white">
+
+  <!-- Owner banner: harmless, dismissible, sits in normal flow (never covers the page) -->
+  <div id="owner-banner" class="owner-banner w-full text-center text-xs sm:text-sm font-extrabold px-10 py-2 relative z-20">
+    <span id="owner-line">🎉 Surprise! You are standing on someone's personal page. Hi, I'm the owner. 👋</span>
+    <button type="button" aria-label="Dismiss banner" onclick="document.getElementById('owner-banner').remove()" class="absolute right-3 top-1/2 -translate-y-1/2 text-white/80 hover:text-white font-bold">✕</button>
+  </div>
 
   <!-- Ambient Light Orbs -->
   <div class="fixed top-[-10%] left-[-10%] w-[500px] h-[500px] bg-glow-1 pointer-events-none rounded-full z-0"></div>
@@ -179,36 +251,74 @@
     
     <!-- Outer Glow Shell -->
     <div class="w-full relative">
-      <div class="absolute -inset-1 bg-gradient-to-r from-indigo-500/30 via-purple-500/30 to-pink-500/30 rounded-3xl blur-xl opacity-75 group-hover:opacity-100 transition duration-1000"></div>
+      <div class="absolute -inset-1 bg-gradient-to-r from-blue-500/30 via-sky-500/30 to-blue-500/30 rounded-3xl blur-xl opacity-75 group-hover:opacity-100 transition duration-1000"></div>
 
       <!-- Glass Card -->
       <div class="relative w-full glass-card rounded-3xl p-6 sm:p-10 overflow-hidden">
         
+        <div class="owner-stamp" aria-hidden="true">Private property 🍦</div>
+
         <!-- Top Status Indicator Badge -->
-        <div class="flex items-center justify-between mb-8 pb-4 border-b border-slate-800/80">
+        <div class="flex items-center justify-between mb-8 pb-4 border-b border-slate-200">
           <div class="flex items-center gap-2.5">
             <div class="w-3 h-3 rounded-full bg-emerald-400 animate-ping"></div>
             <div class="w-2.5 h-2.5 rounded-full bg-emerald-400 -ml-5"></div>
-            <span class="text-xs font-semibold uppercase tracking-wider text-slate-400">URL Redirect Dispatcher</span>
+            <span class="text-xs font-semibold uppercase tracking-wider text-slate-600">URL Redirect Dispatcher</span>
           </div>
-          <span class="text-xs font-mono px-2.5 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-300">v2.4 Modern</span>
+          <span class="text-xs font-mono px-2.5 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-700">v2.4 Modern</span>
         </div>
 
         <!-- STATE 1: Redirect Countdown Active -->
         <div id="countdown-state" class="hidden flex-col items-center text-center">
 
           <!-- Ice Cream Rush Mini Game (top, so it's the first thing users see) -->
-          <div class="w-full bg-slate-900/60 border border-slate-800 rounded-2xl p-4 mb-6">
-            <div class="flex items-center justify-between mb-3 text-xs">
-              <span class="font-bold text-slate-200 flex items-center gap-1.5">
-                <span>🍦</span> Ice Cream Rush <span class="text-slate-500 font-medium">(while you wait)</span>
-              </span>
-              <span class="font-mono text-slate-400">
-                Score <b id="game-score" class="text-emerald-400">0</b> · Best <b id="game-best" class="text-purple-300">0</b>
-              </span>
+          <div class="w-full bg-slate-50 border border-slate-200 rounded-2xl p-4 mb-6">
+            <!-- Game picker -->
+            <div class="flex items-center justify-center gap-1.5 mb-3 text-[11px]" role="tablist" aria-label="Choose a game">
+              <button type="button" role="tab" data-game="rush" class="game-tab px-2.5 py-1 rounded-lg border font-semibold">🍦 Ice Cream Rush</button>
+              <button type="button" role="tab" data-game="memory" class="game-tab px-2.5 py-1 rounded-lg border font-semibold">🃏 Memory</button>
+              <button type="button" role="tab" data-game="ttt" class="game-tab px-2.5 py-1 rounded-lg border font-semibold">❌ Tic-Tac-Toe</button>
             </div>
-            <div id="game-grid" class="grid grid-cols-3 gap-2.5 max-w-[240px] mx-auto" role="group" aria-label="Ice Cream Rush game"></div>
-            <p id="game-hint" class="text-[11px] text-slate-500 mt-3 min-h-[1rem]">Grab the ice creams 🍦. Avoid the broccoli 🥦.</p>
+
+            <!-- Game 1: Ice Cream Rush -->
+            <div id="game-rush">
+              <div class="flex items-center justify-between mb-3 text-xs">
+                <span class="font-bold text-slate-800 flex items-center gap-1.5">
+                  <span>🍦</span> Ice Cream Rush <span class="text-slate-500 font-medium">(while you wait)</span>
+                </span>
+                <span class="font-mono text-slate-600">
+                  Score <b id="game-score" class="text-emerald-600">0</b> · Best <b id="game-best" class="text-sky-700">0</b>
+                </span>
+              </div>
+              <div id="game-grid" class="grid grid-cols-3 gap-2.5 max-w-[240px] mx-auto" role="group" aria-label="Ice Cream Rush game"></div>
+              <p id="game-hint" class="text-[11px] text-slate-500 mt-3 min-h-[1rem]">Grab the ice creams 🍦. Avoid the broccoli 🥦.</p>
+            </div>
+
+            <!-- Game 2: Memory Match -->
+            <div id="game-memory" class="hidden">
+              <div class="flex items-center justify-between mb-3 text-xs">
+                <span class="font-bold text-slate-800">🃏 Memory Match</span>
+                <span class="font-mono text-slate-600">
+                  Moves <b id="mem-moves" class="text-emerald-600">0</b> · Best <b id="mem-best" class="text-sky-700">-</b>
+                </span>
+              </div>
+              <div id="mem-grid" class="grid grid-cols-4 gap-2 max-w-[260px] mx-auto" role="group" aria-label="Memory Match game"></div>
+              <p id="mem-hint" class="text-[11px] text-slate-500 mt-3 min-h-[1rem]">Find all 6 pairs.</p>
+              <button type="button" id="mem-restart" class="mt-2 text-[11px] px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 border border-slate-300 text-slate-700">Shuffle again</button>
+            </div>
+
+            <!-- Game 3: Tic-Tac-Toe -->
+            <div id="game-ttt" class="hidden">
+              <div class="flex items-center justify-between mb-3 text-xs">
+                <span class="font-bold text-slate-800">❌ Tic-Tac-Toe <span class="text-slate-500 font-medium">(you vs. the owner's bot)</span></span>
+                <span class="font-mono text-slate-600">
+                  W <b id="ttt-w" class="text-emerald-600">0</b> · L <b id="ttt-l" class="text-red-600">0</b> · D <b id="ttt-d" class="text-slate-700">0</b>
+                </span>
+              </div>
+              <div id="ttt-grid" class="grid grid-cols-3 gap-2 max-w-[200px] mx-auto" role="group" aria-label="Tic-Tac-Toe game"></div>
+              <p id="ttt-hint" class="text-[11px] text-slate-500 mt-3 min-h-[1rem]">You are ❌. Your move.</p>
+              <button type="button" id="ttt-restart" class="mt-2 text-[11px] px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 border border-slate-300 text-slate-700">New round</button>
+            </div>
           </div>
 
           <!-- Circular Progress Display -->
@@ -216,13 +326,13 @@
             <svg class="w-full h-full" viewBox="0 0 120 120">
               <defs>
                 <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stop-color="#6366f1" />
-                  <stop offset="100%" stop-color="#a855f7" />
+                  <stop offset="0%" stop-color="#2563eb" />
+                  <stop offset="100%" stop-color="#0ea5e9" />
                 </linearGradient>
               </defs>
               <!-- Background Ring -->
               <circle
-                class="text-slate-800/80"
+                class="text-slate-200"
                 stroke-width="7"
                 stroke="currentColor"
                 fill="transparent"
@@ -248,54 +358,54 @@
             
             <!-- Center Counter Text -->
             <div class="absolute flex flex-col items-center justify-center">
-              <span id="seconds-display" class="text-5xl font-extrabold text-white tracking-tighter drop-shadow-md">10</span>
-              <span class="text-[10px] font-bold text-indigo-300 uppercase tracking-widest mt-0.5">Seconds</span>
+              <span id="seconds-display" class="text-5xl font-extrabold text-slate-900 tracking-tighter drop-shadow-md">10</span>
+              <span class="text-[10px] font-bold text-blue-700 uppercase tracking-widest mt-0.5">Seconds</span>
             </div>
           </div>
 
-          <h2 class="text-2xl font-bold text-white mt-4 mb-1 tracking-tight">Redirecting You</h2>
-          <p id="funny-msg" class="text-slate-400 text-sm mb-5 min-h-[1.25rem]">Hold tight, preparing destination portal...</p>
+          <h2 class="text-2xl font-bold text-slate-900 mt-4 mb-1 tracking-tight">Redirecting You</h2>
+          <p id="funny-msg" class="text-slate-600 text-sm mb-5 min-h-[1.25rem]">Hold tight, preparing destination portal...</p>
 
           <!-- Destination Live Preview Card -->
-          <div class="w-full bg-slate-900/80 border border-slate-800 rounded-2xl p-4 mb-6 text-left shadow-inner">
-            <div class="flex items-center justify-between text-xs text-slate-400 mb-2">
-              <span class="flex items-center gap-1.5 font-medium text-slate-300">
-                <i class="fa-solid fa-compass text-indigo-400"></i> Destination Host
+          <div class="w-full bg-slate-50 border border-slate-200 rounded-2xl p-4 mb-6 text-left shadow-inner">
+            <div class="flex items-center justify-between text-xs text-slate-600 mb-2">
+              <span class="flex items-center gap-1.5 font-medium text-slate-700">
+                <i class="fa-solid fa-compass text-blue-600"></i> Destination Host
               </span>
-              <span id="security-badge" class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 flex items-center gap-1">
+              <span id="security-badge" class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 flex items-center gap-1">
                 <i class="fa-solid fa-shield-halved"></i> Safe Protocol
               </span>
             </div>
 
             <!-- Hostname Display -->
-            <div class="font-mono text-sm font-semibold text-indigo-300 truncate mb-1" id="preview-hostname">
+            <div class="font-mono text-sm font-semibold text-blue-700 truncate mb-1" id="preview-hostname">
               example.com
             </div>
 
             <!-- Full URL String -->
-            <div class="font-mono text-xs text-slate-400 truncate break-all opacity-80" id="preview-full-url">
+            <div class="font-mono text-xs text-slate-600 truncate break-all opacity-80" id="preview-full-url">
               https://example.com
             </div>
           </div>
 
           <!-- Controls / Actions -->
           <div class="w-full flex flex-col sm:flex-row gap-3">
-            <button id="skip-btn" class="w-full flex-1 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 active:scale-[0.98] text-white font-semibold py-3 px-5 rounded-2xl transition-all duration-200 flex items-center justify-center gap-2 shadow-lg shadow-indigo-600/30">
+            <button id="skip-btn" class="w-full flex-1 bg-gradient-to-r from-blue-600 to-sky-600 hover:from-blue-500 hover:to-sky-500 active:scale-[0.98] text-white font-semibold py-3 px-5 rounded-2xl transition-all duration-200 flex items-center justify-center gap-2 shadow-lg shadow-blue-600/30">
               <span>Redirect Now</span>
               <i class="fa-solid fa-arrow-right text-xs"></i>
             </button>
-            <button id="cancel-btn" class="w-full sm:w-auto bg-slate-800/80 hover:bg-slate-700 active:scale-[0.98] text-slate-300 hover:text-white font-medium py-3 px-5 rounded-2xl border border-slate-700/80 transition-all duration-200">
+            <button id="cancel-btn" class="w-full sm:w-auto bg-slate-100 hover:bg-slate-200 active:scale-[0.98] text-slate-700 hover:text-slate-900 font-medium py-3 px-5 rounded-2xl border border-slate-300 transition-all duration-200">
               Cancel
             </button>
           </div>
 
           <!-- Custom Timer Speed Adjuster -->
-          <div class="mt-6 pt-4 border-t border-slate-800/60 w-full flex items-center justify-between text-xs text-slate-400">
+          <div class="mt-6 pt-4 border-t border-slate-200 w-full flex items-center justify-between text-xs text-slate-600">
             <span>Countdown Duration:</span>
             <div class="flex items-center gap-1">
-              <button class="timer-speed-btn px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-300" data-seconds="5">5s</button>
-              <button class="timer-speed-btn px-2.5 py-1 rounded-lg bg-indigo-600 border border-indigo-500 text-white font-semibold" data-seconds="10">10s</button>
-              <button class="timer-speed-btn px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-300" data-seconds="15">15s</button>
+              <button class="timer-speed-btn px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 border border-slate-300 text-slate-700" data-seconds="5">5s</button>
+              <button class="timer-speed-btn px-2.5 py-1 rounded-lg bg-blue-600 border border-blue-500 text-white font-semibold" data-seconds="10">10s</button>
+              <button class="timer-speed-btn px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 border border-slate-300 text-slate-700" data-seconds="15">15s</button>
             </div>
           </div>
 
@@ -303,46 +413,46 @@
 
         <!-- STATE 2: Empty Initial State (No parameters) -->
         <div id="empty-state" class="flex flex-col items-center text-center">
-          <div class="w-16 h-16 bg-gradient-to-tr from-indigo-500/20 to-purple-500/20 rounded-2xl flex items-center justify-center text-indigo-400 mb-6 border border-indigo-500/30 shadow-inner">
+          <div class="w-16 h-16 bg-gradient-to-tr from-blue-500/20 to-sky-500/20 rounded-2xl flex items-center justify-center text-blue-600 mb-6 border border-blue-500/30 shadow-inner">
             <i class="fa-solid fa-paper-plane text-2xl"></i>
           </div>
           
-          <h1 class="text-2xl sm:text-3xl font-extrabold text-white mb-2 tracking-tight">URL Opener</h1>
-          <p class="text-slate-400 text-sm mb-6 leading-relaxed max-w-md">
+          <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mb-2 tracking-tight">URL Opener</h1>
+          <p class="text-slate-600 text-sm mb-6 leading-relaxed max-w-md">
             Pass a query parameter in your address bar to automatically count down and redirect visitors.
           </p>
 
           <!-- Usage Instructions Snippet -->
-          <div class="w-full bg-slate-900/90 border border-slate-800 rounded-2xl p-4 mb-6 text-left font-mono text-xs space-y-2">
+          <div class="w-full bg-slate-50 border border-slate-200 rounded-2xl p-4 mb-6 text-left font-mono text-xs space-y-2">
             <div class="text-slate-500 text-[10px] uppercase font-sans font-bold tracking-wider mb-1">Supported Syntax</div>
-            <div class="flex items-center justify-between bg-slate-950/60 p-2.5 rounded-xl border border-slate-800">
-              <span class="text-indigo-300 truncate">?url=https://example.com</span>
-              <button onclick="copyToClipboard('?url=https://example.com')" class="text-slate-500 hover:text-slate-300 transition px-1.5 py-0.5 rounded" title="Copy example">
+            <div class="flex items-center justify-between bg-white p-2.5 rounded-xl border border-slate-200">
+              <span class="text-blue-700 truncate">?url=https://example.com</span>
+              <button onclick="copyToClipboard('?url=https://example.com')" class="text-slate-500 hover:text-slate-700 transition px-1.5 py-0.5 rounded" title="Copy example">
                 <i class="fa-regular fa-copy"></i>
               </button>
             </div>
-            <div class="flex items-center justify-between bg-slate-950/60 p-2.5 rounded-xl border border-slate-800">
-              <span class="text-purple-300 truncate">?u=https://example.com</span>
-              <button onclick="copyToClipboard('?u=https://example.com')" class="text-slate-500 hover:text-slate-300 transition px-1.5 py-0.5 rounded" title="Copy example">
+            <div class="flex items-center justify-between bg-white p-2.5 rounded-xl border border-slate-200">
+              <span class="text-sky-700 truncate">?u=https://example.com</span>
+              <button onclick="copyToClipboard('?u=https://example.com')" class="text-slate-500 hover:text-slate-700 transition px-1.5 py-0.5 rounded" title="Copy example">
                 <i class="fa-regular fa-copy"></i>
               </button>
             </div>
           </div>
 
           <!-- Interactive Test Form -->
-          <div class="w-full pt-4 border-t border-slate-800/80 text-left">
-            <label for="test-url-input" class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Test Redirection Directly</label>
+          <div class="w-full pt-4 border-t border-slate-200 text-left">
+            <label for="test-url-input" class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-2">Test Redirection Directly</label>
             <form id="test-form" class="space-y-3">
               <div class="relative">
                 <input
                   type="text"
                   id="test-url-input"
                   placeholder="Enter target URL (e.g. wikipedia.org)"
-                  class="w-full bg-slate-900/90 border border-slate-700/80 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 rounded-2xl px-4 py-3 text-sm text-white placeholder-slate-500 outline-none transition font-mono"
+                  class="w-full bg-slate-50 border border-slate-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 rounded-2xl px-4 py-3 text-sm text-slate-900 placeholder-slate-500 outline-none transition font-mono"
                   required
                 />
               </div>
-              <button type="submit" class="w-full bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 active:scale-[0.98] text-white font-semibold py-3 px-5 rounded-2xl transition duration-200 text-sm flex items-center justify-center gap-2 shadow-lg shadow-indigo-600/25">
+              <button type="submit" class="w-full bg-gradient-to-r from-blue-600 to-sky-600 hover:from-blue-500 hover:to-sky-500 active:scale-[0.98] text-white font-semibold py-3 px-5 rounded-2xl transition duration-200 text-sm flex items-center justify-center gap-2 shadow-lg shadow-blue-600/25">
                 <i class="fa-solid fa-play text-xs"></i>
                 <span>Launch 10s Countdown</span>
               </button>
@@ -352,12 +462,12 @@
 
         <!-- STATE 3: Error State -->
         <div id="error-state" class="hidden flex-col items-center text-center py-4">
-          <div class="w-16 h-16 bg-red-500/10 rounded-2xl flex items-center justify-center text-red-400 mb-4 border border-red-500/20">
+          <div class="w-16 h-16 bg-red-500/10 rounded-2xl flex items-center justify-center text-red-600 mb-4 border border-red-500/20">
             <i class="fa-solid fa-triangle-exclamation text-2xl"></i>
           </div>
-          <h2 class="text-xl font-bold text-white mb-2">Invalid Target URL</h2>
-          <p id="error-message-text" class="text-slate-400 text-sm mb-6 max-w-sm">The provided redirect parameter could not be parsed as a safe web URL.</p>
-          <button onclick="resetToInitialState()" class="bg-slate-800 hover:bg-slate-700 text-white text-sm font-medium py-3 px-6 rounded-2xl transition duration-200 border border-slate-700">
+          <h2 class="text-xl font-bold text-slate-900 mb-2">Invalid Target URL</h2>
+          <p id="error-message-text" class="text-slate-600 text-sm mb-6 max-w-sm">The provided redirect parameter could not be parsed as a safe web URL.</p>
+          <button onclick="resetToInitialState()" class="bg-slate-100 hover:bg-slate-200 text-slate-900 text-sm font-medium py-3 px-6 rounded-2xl transition duration-200 border border-slate-300">
             Return to Opener
           </button>
         </div>
@@ -368,18 +478,18 @@
       <aside class="side-note mt-6 mx-auto max-w-sm xl:mt-0 xl:mx-0 xl:absolute xl:top-10 xl:left-full xl:ml-10 xl:w-64 text-left">
         <div class="flex items-center gap-2 mb-3">
           <span class="text-xl">📌</span>
-          <span class="text-[11px] font-extrabold uppercase tracking-widest text-amber-300">A note from the human</span>
+          <span class="text-[11px] font-extrabold uppercase tracking-widest text-amber-700">A note from the human</span>
         </div>
-        <p class="text-sm leading-relaxed text-amber-100/90 mb-3">
-          Plot twist: this page lives on my <b class="text-white">personal GitHub account</b>, not on a corporate server.
+        <p class="text-sm leading-relaxed text-amber-900 mb-3">
+          Plot twist: this page lives on my <b class="text-slate-900">personal GitHub account</b>, not on a corporate server.
         </p>
-        <p class="text-sm leading-relaxed text-amber-100/90 mb-3">
-          It's here for my <b class="text-white">personal use</b>. If you landed here anyway, welcome. Please wipe your feet.
+        <p class="text-sm leading-relaxed text-amber-900 mb-3">
+          It's here for my <b class="text-slate-900">personal use</b>. If you landed here anyway, welcome. Please wipe your feet.
         </p>
-        <p class="text-sm leading-relaxed text-amber-100/90 mb-4">
+        <p class="text-sm leading-relaxed text-amber-900 mb-4">
           From time to time I sneak something cute in here. Today: ice cream. 🍦
         </p>
-        <!-- <a href="https://github.com/xomril" target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 text-xs font-bold text-white underline decoration-amber-400 decoration-2 underline-offset-4 hover:text-amber-300">
+        <!-- <a href="https://github.com/xomril" target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 text-xs font-bold text-slate-900 underline decoration-amber-400 decoration-2 underline-offset-4 hover:text-amber-700">
           <i class="fa-brands fa-github"></i> xomril
         </a> -->
       </aside>
@@ -389,12 +499,21 @@
   <!-- Footer -->
   <footer class="w-full py-6 text-center text-xs text-slate-500 z-10 flex flex-col items-center gap-1">
     <p>Lovingly hosted on a personal GitHub account, for personal use. No SLA, only ice cream. 🍦</p>
-    <p class="text-slate-600 text-[11px]">The November 1st deprecation deadline was enthusiastically ignored.</p>
+    <p class="text-slate-500 text-[11px]">The November 1st deprecation deadline was enthusiastically ignored.</p>
   </footer>
 
+  <!-- Joke cookie notice (appears after a few seconds, dismissible) -->
+  <div id="cookie-note" class="hidden" role="note">
+    <p class="mb-2">🍪 <b>This page uses cookies.</b> Mostly chocolate chip. It also uses a human, who owns the place.</p>
+    <div class="flex gap-2">
+      <button type="button" class="cookie-btn px-2.5 py-1 rounded-lg bg-blue-600 text-white font-bold">Accept deliciousness</button>
+      <button type="button" class="cookie-btn px-2.5 py-1 rounded-lg bg-slate-200 text-slate-800">I prefer brownies</button>
+    </div>
+  </div>
+
   <!-- Notification Toast -->
-  <div id="toast" class="fixed bottom-6 right-6 bg-slate-800 text-white text-xs px-4 py-2.5 rounded-xl border border-slate-700 shadow-2xl transition-all duration-300 opacity-0 transform translate-y-4 pointer-events-none z-50 flex items-center gap-2">
-    <i class="fa-solid fa-check text-emerald-400"></i>
+  <div id="toast" class="fixed bottom-6 right-6 bg-slate-100 text-slate-900 text-xs px-4 py-2.5 rounded-xl border border-slate-300 shadow-2xl transition-all duration-300 opacity-0 transform translate-y-4 pointer-events-none z-50 flex items-center gap-2">
+    <i class="fa-solid fa-check text-emerald-600"></i>
     <span id="toast-text">Copied to clipboard!</span>
   </div>
 
@@ -544,8 +663,36 @@
         setTimeout(() => f.remove(), 700);
       }
 
+      // Emoji confetti burst (cosmetic only)
+      function confettiBurst(count) {
+        if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        const bits = ['🍦', '🎉', '✨', '🍪', '🍓'];
+        for (let i = 0; i < count; i++) {
+          const c = document.createElement('span');
+          c.className = 'confetti';
+          c.textContent = bits[Math.floor(Math.random() * bits.length)];
+          c.style.left = (Math.random() * 100) + 'vw';
+          c.style.fontSize = (14 + Math.random() * 16) + 'px';
+          c.style.animationDuration = (2 + Math.random() * 2) + 's';
+          c.style.animationDelay = (Math.random() * 0.4) + 's';
+          document.body.appendChild(c);
+          setTimeout(() => c.remove(), 4800);
+        }
+      }
+      const milestoneLines = {
+        5: '5! You are officially a guest of the owner of this page. 🏠',
+        10: '10! Okay, you are clearly enjoying MY page. Welcome. 🍦',
+        15: '15! Add this page to your favorites. I will know. 🕵️',
+        20: '20! Honorary resident of the owner\'s page. Certificate in the mail. 📜'
+      };
+
       function setScore(v) {
+        const prev = score;
         score = Math.max(0, v);
+        if (score > prev && milestoneLines[score]) {
+          confettiBurst(28);
+          gameHint.textContent = milestoneLines[score];
+        }
         gameScoreEl.textContent = score;
         if (score > best) {
           best = score;
@@ -573,7 +720,7 @@
           setScore(score + 1);
           hole.classList.remove('whacked'); void hole.offsetWidth; hole.classList.add('whacked');
           floatText(hole, '+1', '#34d399');
-          gameHint.textContent = hitLines[Math.floor(Math.random() * hitLines.length)];
+          if (!milestoneLines[score]) gameHint.textContent = hitLines[Math.floor(Math.random() * hitLines.length)];
         }
       }
 
@@ -590,25 +737,208 @@
         hideTimer = setTimeout(hideActive, stay);
       }
 
+      // ---------- Game picker (Rush / Memory / Tic-Tac-Toe) ----------
+      let currentGame = 'rush';
+      let memTimer = null, tttTimer = null;
+      const gameTabs = document.querySelectorAll('.game-tab');
+      const gamePanels = {
+        rush: document.getElementById('game-rush'),
+        memory: document.getElementById('game-memory'),
+        ttt: document.getElementById('game-ttt')
+      };
+
+      // -- Memory Match --
+      const memGrid = document.getElementById('mem-grid');
+      const memMovesEl = document.getElementById('mem-moves');
+      const memBestEl = document.getElementById('mem-best');
+      const memHint = document.getElementById('mem-hint');
+      let memBest = 0, memMoves = 0, memFirst = null, memLock = false, memMatched = 0;
+      try { memBest = parseInt(localStorage.getItem('memBest') || '0', 10) || 0; } catch (e) {}
+      if (memBest) memBestEl.textContent = memBest;
+
+      function memReset() {
+        clearTimeout(memTimer);
+        memGrid.innerHTML = '';
+        memMoves = 0; memFirst = null; memLock = false; memMatched = 0;
+        memMovesEl.textContent = '0';
+        memHint.textContent = 'Find all 6 pairs.';
+        const faces = ['🍦', '🍓', '🍪', '🍫', '🍩', '🧁'];
+        const deck = faces.concat(faces).sort(() => Math.random() - 0.5);
+        deck.forEach((face) => {
+          const c = document.createElement('button');
+          c.type = 'button';
+          c.className = 'mem-card h-14 rounded-xl bg-slate-100 border border-slate-300 text-2xl flex items-center justify-center transition';
+          c.dataset.face = face;
+          c.setAttribute('aria-label', 'card');
+          c.textContent = '?';
+          c.addEventListener('click', () => memFlip(c));
+          memGrid.appendChild(c);
+        });
+      }
+
+      function memFlip(c) {
+        if (memLock || c.dataset.done || c === memFirst) return;
+        c.textContent = c.dataset.face;
+        c.classList.add('bg-blue-600/40');
+        if (!memFirst) { memFirst = c; return; }
+        memMoves++;
+        memMovesEl.textContent = memMoves;
+        const a = memFirst, b = c;
+        memFirst = null;
+        if (a.dataset.face === b.dataset.face) {
+          a.dataset.done = b.dataset.done = '1';
+          a.className = b.className = 'mem-card h-14 rounded-xl bg-emerald-500/20 border border-emerald-500/40 text-2xl flex items-center justify-center';
+          memMatched++;
+          memHint.textContent = 'Match! ' + (6 - memMatched) + ' to go.';
+          if (memMatched === 6) {
+            const nice = memMoves <= 8 ? 'Photographic memory. The owner is jealous.' : 'Done! The owner needed more moves, trust me.';
+            memHint.textContent = 'All pairs found in ' + memMoves + ' moves. ' + nice;
+            confettiBurst(30);
+            if (!memBest || memMoves < memBest) {
+              memBest = memMoves;
+              memBestEl.textContent = memBest;
+              try { localStorage.setItem('memBest', String(memBest)); } catch (e) {}
+            }
+          }
+        } else {
+          memLock = true;
+          memHint.textContent = 'Nope.';
+          memTimer = setTimeout(() => {
+            [a, b].forEach((x) => { x.textContent = '?'; x.classList.remove('bg-blue-600/40'); });
+            memLock = false;
+          }, 700);
+        }
+      }
+      document.getElementById('mem-restart').addEventListener('click', memReset);
+
+      // -- Tic-Tac-Toe (you = X, bot = O) --
+      const tttGrid = document.getElementById('ttt-grid');
+      const tttHint = document.getElementById('ttt-hint');
+      const tttStats = { w: 0, l: 0, d: 0 };
+      const tttLines = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+      let tttBoard = [], tttOver = false;
+      const tttCells = [];
+
+      function tttWinner(b) {
+        for (const [x, y, z] of tttLines) if (b[x] && b[x] === b[y] && b[x] === b[z]) return b[x];
+        return b.every(Boolean) ? 'draw' : null;
+      }
+      function tttFinding(mark) {
+        // return an empty cell that completes a line for `mark`, if any
+        for (const ln of tttLines) {
+          const vals = ln.map((i) => tttBoard[i]);
+          if (vals.filter((v) => v === mark).length === 2 && vals.includes('')) return ln[vals.indexOf('')];
+        }
+        return -1;
+      }
+      function tttRender() {
+        tttCells.forEach((c, i) => { c.textContent = tttBoard[i] === 'X' ? '❌' : tttBoard[i] === 'O' ? '🍦' : ''; });
+      }
+      function tttStatUpdate() {
+        document.getElementById('ttt-w').textContent = tttStats.w;
+        document.getElementById('ttt-l').textContent = tttStats.l;
+        document.getElementById('ttt-d').textContent = tttStats.d;
+      }
+      function tttReset() {
+        clearTimeout(tttTimer);
+        tttBoard = Array(9).fill('');
+        tttOver = false;
+        if (!tttCells.length) {
+          for (let i = 0; i < 9; i++) {
+            const c = document.createElement('button');
+            c.type = 'button';
+            c.className = 'h-16 rounded-xl bg-slate-100 hover:bg-slate-200 border border-slate-300 text-2xl flex items-center justify-center';
+            c.setAttribute('aria-label', 'cell ' + (i + 1));
+            c.addEventListener('click', () => tttPlay(i));
+            tttGrid.appendChild(c);
+            tttCells.push(c);
+          }
+        }
+        tttRender();
+        tttHint.textContent = 'You are ❌. Your move.';
+      }
+      function tttEnd(res) {
+        tttOver = true;
+        if (res === 'X') { tttStats.w++; tttHint.textContent = 'You win! The owner\'s bot is reconsidering its career.'; confettiBurst(24); }
+        else if (res === 'O') { tttStats.l++; tttHint.textContent = 'The ice cream wins. Sweet, sweet victory. 🍦'; }
+        else { tttStats.d++; tttHint.textContent = 'A draw. Everybody gets a scoop.'; }
+        tttStatUpdate();
+      }
+      function tttPlay(i) {
+        if (tttOver || tttBoard[i]) return;
+        tttBoard[i] = 'X';
+        tttRender();
+        let res = tttWinner(tttBoard);
+        if (res) return tttEnd(res);
+        tttHint.textContent = 'Bot is thinking...';
+        tttTimer = setTimeout(() => {
+          let m = tttFinding('O');
+          if (m < 0) m = tttFinding('X');
+          if (m < 0 && !tttBoard[4]) m = 4;
+          if (m < 0) {
+            const free = tttBoard.map((v, k) => v ? -1 : k).filter((k) => k >= 0);
+            m = free[Math.floor(Math.random() * free.length)];
+          }
+          tttBoard[m] = 'O';
+          tttRender();
+          res = tttWinner(tttBoard);
+          if (res) tttEnd(res); else tttHint.textContent = 'Your move.';
+        }, 450);
+      }
+      document.getElementById('ttt-restart').addEventListener('click', tttReset);
+
+      // -- Switching --
+      function applyGameTabs() {
+        gameTabs.forEach((t) => {
+          const on = t.dataset.game === currentGame;
+          t.setAttribute('aria-selected', on ? 'true' : 'false');
+          t.className = 'game-tab px-2.5 py-1 rounded-lg border font-semibold ' +
+            (on ? 'bg-blue-600 border-blue-500 text-white' : 'bg-slate-100 hover:bg-slate-200 border-slate-300 text-slate-700');
+        });
+        Object.keys(gamePanels).forEach((k) => gamePanels[k].classList.toggle('hidden', k !== currentGame));
+      }
+      function startGame() {
+        applyGameTabs();
+        if (currentGame === 'rush') {
+          buildGrid();
+          setScore(0);
+          gameHint.textContent = 'Grab the ice creams 🍦. Avoid the broccoli 🥦.';
+          spawnTimer = setInterval(spawn, 1000);
+        } else if (currentGame === 'memory') {
+          memReset();
+        } else {
+          tttReset();
+        }
+      }
+      function haltGames() {
+        clearInterval(spawnTimer);
+        clearTimeout(hideTimer);
+        clearTimeout(memTimer);
+        clearTimeout(tttTimer);
+        hideActive();
+      }
+      gameTabs.forEach((t) => t.addEventListener('click', () => {
+        if (t.dataset.game === currentGame) return;
+        haltGames();
+        currentGame = t.dataset.game;
+        track('game_selected', { game: currentGame });
+        startGame();
+      }));
+
       function startFun() {
         stopFun();
-        buildGrid();
-        setScore(0);
-        gameHint.textContent = 'Grab the ice creams 🍦. Avoid the broccoli 🥦.';
         let i = 0;
         funnyMsg.textContent = funnyLines[0];
         msgTimer = setInterval(() => {
           i = (i + 1) % funnyLines.length;
           funnyMsg.textContent = funnyLines[i];
         }, 2200);
-        spawnTimer = setInterval(spawn, 1000);
+        startGame();
       }
 
       function stopFun() {
         clearInterval(msgTimer);
-        clearInterval(spawnTimer);
-        clearTimeout(hideTimer);
-        hideActive();
+        haltGames();
       }
 
       // Execute Redirection
@@ -636,10 +966,10 @@
 
         // Security Protocol Badge update
         if (parsedUrl.protocol === 'https:') {
-          securityBadge.className = "px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 flex items-center gap-1";
+          securityBadge.className = "px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 flex items-center gap-1";
           securityBadge.innerHTML = '<i class="fa-solid fa-shield-halved"></i> Secure HTTPS';
         } else {
-          securityBadge.className = "px-2 py-0.5 rounded-full text-[10px] font-semibold bg-amber-500/10 text-amber-400 border border-amber-500/20 flex items-center gap-1";
+          securityBadge.className = "px-2 py-0.5 rounded-full text-[10px] font-semibold bg-amber-500/10 text-amber-600 border border-amber-500/20 flex items-center gap-1";
           securityBadge.innerHTML = '<i class="fa-solid fa-lock-open"></i> HTTP Unencrypted';
         }
 
@@ -713,6 +1043,42 @@
         }, 2000);
       };
 
+      // Rotating owner banner lines (purely cosmetic)
+      const ownerLines = [
+        '🎉 Surprise! You are standing on someone\'s personal page. Hi, I\'m the owner. 👋',
+        '🏠 Fun fact: this page is mine. You are a guest. Guests get ice cream.',
+        '🕵️ Yes, I built this. No, there is no corporate help desk.',
+        '🧹 Please wipe your feet. This is a personal website.',
+        '🍦 Powered by one human and an unreasonable amount of ice cream.'
+      ];
+      const ownerLineEl = document.getElementById('owner-line');
+      let ownerIdx = 0;
+      setInterval(() => {
+        if (!ownerLineEl.isConnected) return;
+        ownerIdx = (ownerIdx + 1) % ownerLines.length;
+        ownerLineEl.textContent = ownerLines[ownerIdx];
+      }, 4000);
+
+      // Joke cookie notice after 3s
+      const cookieNote = document.getElementById('cookie-note');
+      setTimeout(() => cookieNote.classList.remove('hidden'), 3000);
+      document.querySelectorAll('.cookie-btn').forEach(b => b.addEventListener('click', () => {
+        cookieNote.remove();
+        confettiBurst(18);
+      }));
+
+      // Tab title guilt trip while the tab is hidden
+      const originalTitle = document.title;
+      document.addEventListener('visibilitychange', () => {
+        document.title = document.hidden ? '🍦 Come back, my page misses you' : originalTitle;
+      });
+
+      // Console greeting for the curious
+      try {
+        console.log('%cHey, a fellow page-inspector! 👋', 'font-size:18px;font-weight:800;color:#f472b6');
+        console.log('%cThis page is mine. Hi. There is ice cream in the source.', 'font-size:12px;color:#fbbf24');
+      } catch (e) {}
+
       // Handle Initial Parameter Check
       const params = new URLSearchParams(window.location.search);
       const rawUrlParam = params.get('url') || params.get('u');
@@ -739,9 +1105,9 @@
       speedBtns.forEach(btn => {
         btn.addEventListener('click', (e) => {
           speedBtns.forEach(b => {
-            b.className = "timer-speed-btn px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-300";
+            b.className = "timer-speed-btn px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 border border-slate-300 text-slate-700";
           });
-          e.target.className = "timer-speed-btn px-2.5 py-1 rounded-lg bg-indigo-600 border border-indigo-500 text-white font-semibold";
+          e.target.className = "timer-speed-btn px-2.5 py-1 rounded-lg bg-blue-600 border border-blue-500 text-white font-semibold";
           selectedDuration = parseInt(e.target.getAttribute('data-seconds'), 10);
           if (targetUrl) {
             startCountdown(targetUrl, 'duration_change');
